@@ -1,0 +1,36 @@
+Building an HR Analytics Dashboard in Power BI for employee performance, attrition rate, and departmental metrics involves several key steps:
+1. Data Preparation in Excel:
+Organize your HR data in Excel, ensuring clear headers and appropriate data types for each column (e.g., employee ID, department, performance rating, date of joining, date of exit).
+Clean and transform data as needed, handling missing values, inconsistencies, and ensuring data accuracy.
+2. Importing Data into Power BI:
+Open Power BI Desktop and use "Get Data" to import your Excel workbook.
+In Power Query Editor, refine the data:
+Promote the first row as headers.
+Set correct data types for all columns (e.g., Date for dates, Whole Number for IDs, Decimal Number for performance ratings).
+Rename tables for clarity (e.g., "Employees," "Departments").
+3. Data Modeling (if necessary):
+Establish relationships between different tables if your data is spread across multiple Excel sheets representing different entities (e.g., a table for employee details and another for departmental information).
+4. Creating Measures and Calculated Columns (DAX):
+Attrition Rate: Create a measure to calculate the attrition rate:
+Average Performance Score: Create a measure for average performance:
+Employee Count: Create a measure to count active employees:
+Create any other relevant measures for departmental metrics (e.g., average tenure by department, training hours per employee).
+5. Designing the Dashboard Layout and Visualizations:
+Employee Performance:
+Use a Gauge or KPI card for overall average performance score.
+Employ a Bar chart to show performance distribution across different departments or job roles.
+Consider a Scatter plot to visualize performance vs. tenure or other relevant factors.
+Attrition Rate:
+Display the Attrition Rate using a KPI card or Gauge.
+Create a Line chart to show attrition trends over time.
+Utilize a Donut chart or Bar chart to break down attrition by department, reason for leaving, or other demographic factors.
+Departmental Metrics:
+Use Table visuals or Matrix visuals to show key metrics per department (e.g., headcount, average tenure, average salary).
+Employ Bar charts or Column charts to compare departmental performance or other metrics.
+Interactive Filters (Slicers):
+Add slicers for key dimensions like "Department," "Job Role," "Gender," "Age Group," or "Date Range" to enable interactive filtering of the dashboard.
+6. Refinement and Interactivity:
+Arrange visuals logically on the canvas.
+Apply consistent formatting, colors, and fonts for a clean and professional look.
+Ensure all visuals interact appropriately with the slicers and each other.
+Add a clear and concise title to the dashboard.
