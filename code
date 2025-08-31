@@ -1,0 +1,78 @@
+# Import libraries
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import classification_report, confusion_matrix
+
+# Load dataset
+df = pd.read_csv('churn-bigml-20.csv')  # Replace with your filename
+
+# Display basic info
+print(df.info())
+print(df.head())
+
+# Drop customer ID if present
+if 'customerID' in df.columns:
+    df.drop(columns=['customerID'], inplace=True)
+
+# Clean TotalCharges if needed
+if 'TotalCharges' in df.columns:
+    df['TotalCharges'] = pd.to_numeric(df['TotalCharges'], errors='coerce')
+    df['TotalCharges'].fillna(df['TotalCharges'].median(), inplace=True)
+
+# Convert 'Churn' to binary
+df['Churn'] = df['Churn'].map({'Yes': 1, 'No': 0})
+
+# Convert other yes/no columns to binary
+binary_cols = ['Partner', 'Dependents', 'PhoneService', 'PaperlessBilling', 'SeniorCitizen']
+for col in binary_cols:
+    if col in df.columns:
+        df[col] = df[col].map({'Yes': 1, 'No': 0}) if df[col].dtype == 'object' else df[col]
+
+# One-hot encode categorical variables
+df = pd.get_dummies(df, drop_first=True)
+
+# Visualize churn distribution
+sns.countplot(x='Churn', data=df)
+plt.title('Churn Distribution')
+plt.show()
+
+# Correlation heatmap
+plt.figure(figsize=(12, 8))
+sns.heatmap(df.corr(), cmap='coolwarm', annot=False)
+plt.title('Correlation Heatmap')
+plt.show()
+
+# Boxplots
+for col in ['tenure', 'MonthlyCharges', 'TotalCharges']:
+    if col in df.columns:
+        sns.boxplot(x='Churn', y=col, data=df)
+        plt.title(f'Churn vs {col}')
+        plt.show()
+
+# Prepare data for modeling
+X = df.drop('Churn', axis=1)
+y = df['Churn']
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Train logistic regression model
+model = LogisticRegression(max_iter=1000)
+model.fit(X_train, y_train)
+
+# Predict and evaluate
+y_pred = model.predict(X_test)
+print("Confusion Matrix:\n", confusion_matrix(y_test, y_pred))
+print("\nClassification Report:\n", classification_report(y_test, y_pred))
+
+# Feature importance
+importance = pd.Series(model.coef_[0], index=X.columns).sort_values(ascending=False)
+importance.plot(kind='bar', title='Feature Importance')
+plt.tight_layout()
+plt.show()
+
+# Export cleaned data for Power BI or Tableau
+df.to_csv('cleaned_churn_data.csv', index=False)
