@@ -1,0 +1,6 @@
+
+
+The process of telecom churn analysis starts with cleaning and understanding the data, followed by exploring customer demographics, services, billing, and contract details to identify churn patterns. 
+After preparing the data with encoding and scaling, machine learning models such as Logistic Regression or Random Forest are trained to predict which customers are likely to leave.
+The results are evaluated using metrics like ROC-AUC and Precision-Recall, and feature importance is analyzed to understand key churn drivers.
+Finally, customers are segmented into risk groups, and actionable strategies—such as offering discounts to month-to-month users or improving onboarding for new customers—are recommended to reduce churn.
